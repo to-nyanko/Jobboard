@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>求人投稿　ジョブボード</title>
+<style>
+	body { font-family: sans-serif; margin:40px; background: #f9f9f9; }
+	.form-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 600px; }
+	.form-group { margin-bottom: 20px; }
+	label { display: block; font-weight: bold; margin-bottom:5px; color: #333; }
+	input[type="text"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+	textarea { height: 120px; }
+	.error-message { color: #cc0000; font-size: 0.9em; margin-top: 5px; }
+	button { background: #0066cc; color: white; padding: 12px 20px; border: none; font-size: 1em; cursor: pointer; }
+	button:hover { background: #0052a3; }
+	.back-link { display: inline-block; margin-top: 15px; color: #0066cc; text-decoration: none; }
+</style>
+</head>
+<body>
+	<div class="form-container">
+		<h1>新規求人投稿</h1>
+		
+		<form th:action="@{/jobs}" th:method="post" th:object="${jobForm}">
+			
+			<div class="form-group">
+				<label for="companyId">求人企業</label>
+				<select id="companyId" th:field="*{companyId}">
+					<option value="">-- 企業を選択してください --</option>
+					<option th:each="company : ${companyList}"th:value="${company.id}" th:text="${company.name}">企業名</option>
+				</select>
+				<div class="error-message" th:if="${#fields.hasErrors('companyId')}" th:errors="*{companyId}">エラーメッセージ</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="title">求人タイトル</label>
+				<input type="text" id="title" th:field="*{title}" placeholder="例：Javaバックエンドエンジニア">
+				<div class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">エラーメッセージ</div>
+			</div>
+			
+			<dix class="form-group">
+				<label for="salary">給与</label>
+				<input type="text" id="salary" th:field="*{salary}" placeholder="例：月給25万円 〜 40万円">
+				<div class="error-message" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">エラーメッセージ</div>
+			</dix>
+			
+			<div class="form-group">
+				<label for="description">仕事内容(10文字以上)</label>
+				<textarea id="dscription" th:field="*{description}" placeholder="仕事内容の詳細、必要なスキルなどを入力してください"></textarea>
+				<div class="error-message" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">エラーメッセージ</div>
+			</div>
+			
+			<button type="submit">求人を掲載する</button>
+		</form>
+		
+		<a th:href="@{/jobs}" class="back-link">←求人一覧に戻る</a>
+	</div>
+
+</body>
+</html>

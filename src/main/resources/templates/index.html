@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://thymeleaf.org">
+<head>
+ <meta charset="UTF-8">
+ <title>求人一覧　ジョブボード</title>
+ <style>
+	body { font-family: sans-serif; margin: 40px; background: #f9f9f9; }
+	h1 { color: #333; }
+	.job-card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rdba(0,0,0,0.1); }
+	.job-title { font-size: 1.3em; font-weight: bold; color: #0066cc; }
+	.company-name { font-weight: bold; color: #555; }
+	.salary { color: #e67e22; font-weight: bold; }
+ </style>
+</head>
+<body>
+	
+	<h1>求人一覧</h1>
+	
+	<div th:if="${jobList.isEmpty()}">
+		<p>現在、募集中の求人はありません。</p>
+	</div>
+	
+	<div th:each="job : ${jobList}" class="job-card">
+		<div class="job-title" th:text="${job.title}">求人タイトル</div>
+		<p>
+			企業名: <span class="company-name" th:text="${job.company.name}">企業名</span>
+			勤務地: <span th:text="${job.company.location}">勤務地</span>
+		</p>
+		<p>給与: <span class="salary" th:text="${job.salary}">給与</span></p>
+		<p th:text="${job.description}">仕事内容の説明文</p>
+	</div>
+
+</body>
+</html>
