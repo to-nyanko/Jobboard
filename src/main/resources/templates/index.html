@@ -6,18 +6,36 @@
  <style>
 	body { font-family: sans-serif; margin: 40px; background: #f9f9f9; }
 	h1 { color: #333; }
+	
+	.search-container { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: center; }
+    .search-input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 300px; font-size: 1em; }
+    .search-button { background: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+	.search-button:hover { background: #27ae60; }
+    .clear-link { color: #7f8c8d; text-decoration: none; font-size: 0.9em; }
+    .clear-link:hover { text-decoration: underline; }
+	
 	.job-card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rdba(0,0,0,0.1); }
 	.job-title { font-size: 1.3em; font-weight: bold; color: #0066cc; }
 	.company-name { font-weight: bold; color: #555; }
 	.salary { color: #e67e22; font-weight: bold; }
+	.nav-link { display: inline-block; margin-bottom: 20px; color: #0066cc; text-decoration: none; font-weight: bold; }
  </style>
 </head>
 <body>
 	
 	<h1>求人一覧</h1>
 	
+	<a th:href="@{/jobs/create}" class="nav-link">＋ 新しい求人を投稿する</a>
+
+	    <form th:action="@{/jobs}" th:method="get" class="search-container">
+	        <input type="text" name="keyword" th:value="${keyword}" class="search-input" placeholder="キーワードを入力（例：Java、未経験）">
+	        <button type="submit" class="search-button">検索</button>
+	        
+	        <a th:if="${keyword != null && !keyword.isBlank()}" th:href="@{/jobs}" class="clear-link">検索をクリア</a>
+	    </form>
+	
 	<div th:if="${jobList.isEmpty()}">
-		<p>現在、募集中の求人はありません。</p>
+		<p>該当する求人は見つかりませんでした。</p>
 	</div>
 	
 	<div th:each="job : ${jobList}" class="job-card">

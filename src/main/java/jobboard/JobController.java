@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class JobController {
@@ -19,13 +20,6 @@ public class JobController {
 	public JobController(JobRepository jobRepository,CompanyRepository companyRepository) {
 		this.jobRepository = jobRepository;
 		this.companyRepository = companyRepository;
-	}
-	
-	@GetMapping("/jobs")
-	public String index(Model model) {
-		List<Job> jobList = jobRepository.findAll();
-		model.addAttribute("jobList",jobList);
-		return "index";
 	}
 	
 	@GetMapping("/jobs/create")
@@ -54,6 +48,21 @@ public class JobController {
 		jobRepository.save(job);
 		
 		return "redirect:/jobs";
+	}
+	
+	@GetMapping("/jobs")
+	public String index(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+		List<Job> jobList;
+		
+		if (keyword != null && !keyword.isBlank()) {
+			jobList = jobRepository.searchByKeyword(keyword);
+			model.addAttribute("keyword",keyword);
+		}else {
+			jobList = jobRepository.findAll();
+		}
+		
+		model.addAttribute("jobList",jobList);
+		return "index";
 	}
 
 }
