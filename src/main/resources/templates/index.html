@@ -39,7 +39,9 @@
 	</div>
 	
 	<div th:each="job : ${jobList}" class="job-card">
-		<div class="job-title" th:text="${job.title}">求人タイトル</div>
+		<div class="job-title" >
+		<a th:href="@{/jobs/{id}(id=${job.id})}" th:text="${job.title}" style="text-decoration: none; color: #0066cc;">求人タイトル</a>
+		</div>
 		<p>
 			企業名: <span class="company-name" th:text="${job.company.name}">企業名</span>
 			勤務地: <span th:text="${job.company.location}">勤務地</span>
