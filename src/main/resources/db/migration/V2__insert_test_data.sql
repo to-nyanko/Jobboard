@@ -8,3 +8,11 @@ INSERT INTO jobs (company_id, title, salary, description) VALUES
 
 INSERT INTO jobs (company_id, title, salary, description) VALUES
 (2,'社内業務システム開発エンジニア','月給 30万円　〜　50万円','大手クライアント向けの基幹システム構築プロジェクトです。Java、MySQLを用いた堅牢なシステム設計・開発に携わっていただきます。');
+
+INSERT INTO users (username, password, enabled) VALUES 
+('company1', '$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG', true),
+('company2', '$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG', true);
+
+INSERT INTO authorities (username, authority) VALUES 
+('company1', 'ROLE_COMPANY'),
+('company2', 'ROLE_COMPANY');
